@@ -1,0 +1,15 @@
+const Router = require('koa-router')
+const { verifyAuth ,verifyPermission} = require('../middleware/auth.middleware')
+
+const {create,detail, list, updata, remove, fileInfo,personallist,search, listByType} = require('../controller/moment.controler')
+const momentRouter = new Router({prefix:'/moment'})
+momentRouter.get('/',list)
+momentRouter.get('/sort',listByType)
+momentRouter.post('/',verifyAuth,create)
+momentRouter.get('/:momentId',detail)
+momentRouter.patch('/:momentId',verifyAuth,verifyPermission,updata)
+momentRouter.delete('/:momentId',verifyAuth,verifyPermission,remove)
+momentRouter.get('/personalspace/:userId',personallist)
+momentRouter.get('/images/:filename',fileInfo)
+momentRouter.post('/search',search)
+module.exports = momentRouter
